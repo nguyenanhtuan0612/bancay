@@ -4,7 +4,6 @@ import { Category } from './categories.entity';
 import { TreeCategoryLinks } from './treeCategoryLink.entity';
 import { Transaction } from './transaction.entity';
 import { CountUserRegister } from './countUserRegister.entity';
-import { TransactionStatistic } from './transactionStatistics.entity';
 import { Item } from './item.entity';
 
 export default [
@@ -14,6 +13,5 @@ export default [
     TreeCategoryLinks,
     Transaction,
     CountUserRegister,
-    TransactionStatistic,
     Item,
 ];

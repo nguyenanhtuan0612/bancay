@@ -1,8 +1,7 @@
 import { AddTreeDto, UpdateTreeDto } from '@/dtos/tree.dto';
-import { TreeCategoryLinks } from '@/entities/treeCategoryLink.entity';
 import { Category } from '@/entities/categories.entity';
-import { TransactionStatistic } from '@/entities/transactionStatistics.entity';
 import { Tree } from '@/entities/tree.entity';
+import { TreeCategoryLinks } from '@/entities/treeCategoryLink.entity';
 import { User } from '@/entities/users.entity';
 import { ExceptionWithMessage } from '@/exceptions/HttpException';
 import { Options } from '@/interfaces/request.interface';
@@ -30,22 +29,6 @@ export class TreeServie {
             }
         }
 
-        const month = new Date().getMonth();
-        const year = new Date().getFullYear();
-        const statistic = await TransactionStatistic.findOne({
-            where: { month, year },
-        });
-
-        if (statistic) {
-            statistic.accountCreate += 1;
-            await statistic.save();
-        } else {
-            const data = new TransactionStatistic();
-            data.month = month;
-            data.year = year;
-            data.accountCreate = 1;
-            await data.save();
-        }
         return res;
     }
 
