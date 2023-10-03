@@ -11,11 +11,10 @@ class Item {
     quantity: number;
 }
 
-export class BuyTreeDto {
-    @ApiProperty()
-    items: Item[];
+export class AddToCartDto {
+    treeId: number;
+}
 
-    @ApiProperty()
-    @IsString()
+export class PurchaseDto {
     address: string;
 }
