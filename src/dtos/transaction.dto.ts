@@ -12,6 +12,8 @@ class Item {
 }
 
 export class AddToCartDto {
+    @ApiProperty()
+    @IsNumber()
     treeId: number;
 }
 

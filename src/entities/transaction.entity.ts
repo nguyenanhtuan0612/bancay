@@ -1,18 +1,19 @@
 import {
     AutoIncrement,
     BelongsTo,
+    BelongsToMany,
     Column,
     CreatedAt,
     DataType,
     ForeignKey,
-    HasMany,
     Model,
     PrimaryKey,
     Table,
     UpdatedAt,
 } from 'sequelize-typescript';
-import { User } from './users.entity';
 import { Item } from './item.entity';
+import { Tree } from './tree.entity';
+import { User } from './users.entity';
 
 @Table({
     tableName: 'transactions',
@@ -48,6 +49,6 @@ export class Transaction extends Model {
     @BelongsTo(() => User)
     user: User;
 
-    @HasMany(() => Item)
-    tree: Item;
+    @BelongsToMany(() => Tree, () => Item)
+    tree: Tree;
 }

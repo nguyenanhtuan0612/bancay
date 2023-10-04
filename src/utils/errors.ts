@@ -101,4 +101,8 @@ export const errors = {
         code: 30,
         detail: '{{cart.nothingInCart}}',
     },
+    NOT_ENOUGH: {
+        code: 31,
+        detail: '{{tree.notEnough}}',
+    },
 };
