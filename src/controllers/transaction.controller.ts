@@ -61,6 +61,20 @@ export class TransactionController {
 
     @ApiBearerAuth('authorization')
     @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles([Role.CUSTOMER])
+    @Put('myCart')
+    async myCart(@Res() res: Response, @Req() req: RequestWithUser) {
+        try {
+            const { auth } = req;
+            const data = await this.service.myCart(auth);
+            return res.status(200).json(data);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @ApiBearerAuth('authorization')
+    @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles([Role.ADMIN])
     @Put('comfirmDelivering/:id')
     async comfirmDelivering(

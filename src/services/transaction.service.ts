@@ -9,6 +9,25 @@ import { Injectable } from '@nestjs/common';
 
 @Injectable()
 export class TransactionService {
+    async myCart(user: IUser) {
+        let cartExist = await Transaction.findOne({
+            where: {
+                userId: user.id,
+                status: Status.CART,
+            },
+        });
+
+        if (!cartExist) {
+            cartExist = await Transaction.create({
+                userId: user.id,
+                status: Status.CART,
+            });
+
+            return cartExist;
+        }
+        return cartExist;
+    }
+
     async addToCart(user: IUser, treeId: number) {
         let cartExist = await Transaction.findOne({
             where: {
