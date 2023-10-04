@@ -142,16 +142,16 @@ export class TransactionService {
         return cartExist;
     }
 
-    async purchase(user: IUser, cartId: number, body: PurchaseDto) {
+    async purchase(user: IUser, body: PurchaseDto) {
         const cart = await Transaction.findOne({
             where: {
                 userId: user.id,
-                id: cartId,
+                status: Status.CART,
             },
         });
 
         if (!cart) {
-            throw new ExceptionWithMessage(errors.RECORD_NOT_FOUND, 404);
+            throw new ExceptionWithMessage(errors.NOTHING_IN_CART, 400);
         }
 
         cart.status = Status.PENDING;

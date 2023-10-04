@@ -1,5 +1,5 @@
 import { Roles } from '@/decorators/roles.decorator';
-import { AddToCartDto } from '@/dtos/transaction.dto';
+import { AddToCartDto, PurchaseDto } from '@/dtos/transaction.dto';
 import { JwtAuthGuard } from '@/guards/jwt.guard';
 import { RolesGuard } from '@/guards/role.guard';
 import { RequestWithUser } from '@/interfaces/auth.interface';
@@ -55,6 +55,24 @@ export class TransactionController {
         try {
             const { auth } = req;
             const data = await this.service.removeFromCart(auth, body.treeId);
+            return res.status(200).json(data);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @ApiBearerAuth('authorization')
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles([Role.CUSTOMER, Role.ADMIN])
+    @Put('purchase')
+    async purchase(
+        @Res() res: Response,
+        @Req() req: RequestWithUser,
+        @Body() body: PurchaseDto,
+    ) {
+        try {
+            const { auth } = req;
+            const data = await this.service.purchase(auth, body);
             return res.status(200).json(data);
         } catch (error) {
             throw error;
