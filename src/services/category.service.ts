@@ -30,7 +30,7 @@ export class CategoriesService {
 
     async detail(id: number) {
         const data = await Category.findByPk(id, {
-            include: [{ model: User }],
+            // include: [{ model: User }],
         });
         if (!data) {
             throw new ExceptionWithMessage(errors.RECORD_NOT_FOUND, 404);
@@ -46,9 +46,7 @@ export class CategoriesService {
     }
 
     async delete(id: number) {
-        const data = await Category.findByPk(id, {
-            include: [{ model: User }],
-        });
+        const data = await Category.findByPk(id);
         if (!data) {
             throw new ExceptionWithMessage(errors.RECORD_NOT_FOUND, 404);
         }

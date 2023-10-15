@@ -46,11 +46,12 @@ export class TreeServie {
             });
 
             for (const iterator of dto.categories) {
-                const cate = await Category.findByPk(iterator);
+                const iterator1 = iterator as any;
+                const cate = await Category.findByPk(iterator1.id);
                 if (cate) {
                     const link = new TreeCategoryLinks();
                     link.categoryId = cate.id;
-                    link.categoryId = data.id;
+                    link.treeId = data.id;
                     await link.save();
                 }
             }
@@ -64,7 +65,7 @@ export class TreeServie {
 
     async detail(id: number) {
         const data = await Tree.findByPk(id, {
-            include: [{ model: User }, { model: Category }],
+            include: [{ model: Category }],
         });
         if (!data) {
             throw new ExceptionWithMessage(errors.ACCOUNT_NOT_FOUND, 404);
@@ -76,6 +77,7 @@ export class TreeServie {
     async list(options: Options) {
         const data = await Tree.findAndCountAll({
             ...options,
+            include: [{ model: Category }],
         });
 
         return data;
@@ -107,9 +109,7 @@ export class TreeServie {
     }
 
     async delete(id: number) {
-        const data = await Tree.findByPk(id, {
-            include: [{ model: User }],
-        });
+        const data = await Tree.findByPk(id);
         if (!data) {
             throw new ExceptionWithMessage(errors.ACCOUNT_NOT_FOUND, 404);
         }

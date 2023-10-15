@@ -51,8 +51,6 @@ export class AuthController {
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard)
     @Put('/changePassword')
     async changePassword(
         @Res() res: Response,

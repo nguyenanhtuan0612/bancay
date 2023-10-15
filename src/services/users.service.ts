@@ -17,6 +17,8 @@ export class UsersService {
         const salt = await genSalt(10);
         user.password = await hash(createUserDto.password, salt);
         user.role = createUserDto.role;
+        user.fullName = createUserDto.fullName;
+        user.phoneNumber = createUserDto.phoneNumber;
         const userData: IUser = await user.save();
 
         const month = new Date().getMonth();

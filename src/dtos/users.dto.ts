@@ -1,7 +1,7 @@
 import { User } from '@/entities/users.entity';
 import { JwtInfo } from '@/interfaces/auth.interface';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsNumber, IsOptional, IsString } from 'class-validator';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
 
 export class RegisterDto {
     @ApiProperty()
@@ -25,6 +25,14 @@ export class CreateUserDto {
     @ApiProperty()
     @IsString()
     role: string;
+
+    @ApiProperty()
+    @IsString()
+    fullName: string;
+
+    @ApiProperty()
+    @IsString()
+    phoneNumber: string;
 }
 
 export class UpdateUserDto {
@@ -42,6 +50,16 @@ export class UpdateUserDto {
     @IsOptional()
     @IsString()
     role: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    fullName: string;
+
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsString()
+    phoneNumber: string;
 }
 
 export class LoginDto {
@@ -70,24 +88,21 @@ export class ChangeRoleDto {
     role: string;
 }
 
-export class AddMoneyToBalanceDto {
-    @ApiProperty()
-    @IsNumber()
-    money: number;
-}
-
 export class UserResponse {
     id: string;
     email: string;
-    balance: number;
     role: string;
     active: boolean;
+    fullName: string;
+    phoneNumber: string;
 
     constructor(iUser: User) {
         this.id = iUser.id;
         this.email = iUser.email;
         this.role = iUser.role;
         this.active = iUser.active;
+        this.fullName = iUser.fullName;
+        this.phoneNumber = iUser.phoneNumber;
     }
 }
 

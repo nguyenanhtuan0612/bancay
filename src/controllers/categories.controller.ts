@@ -25,9 +25,6 @@ import { Response } from 'express';
 export class CategoriesController {
     constructor(private readonly service: CategoriesService) {}
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Post()
     async create(@Res() res: Response, @Body() dto: CreateCategoryDto) {
         try {
@@ -38,9 +35,6 @@ export class CategoriesController {
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Put('/update/:id')
     async update(
         @Res() res: Response,
@@ -93,13 +87,11 @@ export class CategoriesController {
             const data = await this.service.list(options);
             return res.status(200).json(data);
         } catch (error) {
+            console.log('cate', error);
             throw error;
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Delete('/delete/:id')
     async delete(@Res() res: Response, @Param('id') id: number) {
         try {
