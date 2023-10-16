@@ -46,8 +46,7 @@ export class TreeServie {
             });
 
             for (const iterator of dto.categories) {
-                const iterator1 = iterator as any;
-                const cate = await Category.findByPk(iterator1.id);
+                const cate = await Category.findByPk(iterator);
                 if (cate) {
                     const link = new TreeCategoryLinks();
                     link.categoryId = cate.id;
