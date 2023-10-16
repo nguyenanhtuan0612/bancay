@@ -1,11 +1,5 @@
-import { Roles } from '@/decorators/roles.decorator';
-import { ExceptionWithMessage } from '@/exceptions/HttpException';
-import { JwtAuthGuard } from '@/guards/jwt.guard';
-import { RolesGuard } from '@/guards/role.guard';
 import { RequestWithUserOption } from '@/interfaces/auth.interface';
 import { UsersService } from '@/services/users.service';
-import { Role } from '@/utils/constants';
-import { errors } from '@/utils/errors';
 import { ChangeRoleDto, CreateUserDto } from '@dtos/users.dto';
 import {
     Body,
@@ -16,9 +10,8 @@ import {
     Put,
     Req,
     Res,
-    UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
+import { ApiQuery, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 
 @ApiTags('Users')
@@ -26,9 +19,6 @@ import { Response } from 'express';
 class UsersController {
     constructor(private readonly usersService: UsersService) {}
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Post()
     async create(@Body() createUserDto: CreateUserDto, @Res() res: any) {
         try {
@@ -60,9 +50,6 @@ class UsersController {
         description: '10',
         required: false,
     })
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Get()
     async list(@Req() req: RequestWithUserOption, @Res() res: any) {
         try {
@@ -73,9 +60,6 @@ class UsersController {
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Put('ban/:id')
     async ban(@Param('id') id: string, @Res() res: any) {
         try {
@@ -86,9 +70,6 @@ class UsersController {
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Put('unBan/:id')
     async unBan(@Param('id') id: string, @Res() res: any) {
         try {
@@ -99,9 +80,6 @@ class UsersController {
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Put('changeRole/:id')
     async changeRole(
         @Param('id') id: string,
@@ -116,7 +94,6 @@ class UsersController {
         }
     }
 
-    @UseGuards(JwtAuthGuard)
     @Get('detail/:id')
     async detail(
         @Param('id') id: string,
@@ -124,9 +101,9 @@ class UsersController {
         @Req() req: RequestWithUserOption,
     ) {
         try {
-            if (req.auth.role !== Role.ADMIN || req.auth.id !== id) {
-                throw new ExceptionWithMessage(errors.FORBIDDEN_RESOURCE, 403);
-            }
+            // if (req.auth.role !== Role.ADMIN || req.auth.id !== id) {
+            //     throw new ExceptionWithMessage(errors.FORBIDDEN_RESOURCE, 403);
+            // }
             const rs = await this.usersService.detail(id);
             return res.status(200).json(rs);
         } catch (error) {

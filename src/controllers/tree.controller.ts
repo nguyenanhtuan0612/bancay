@@ -25,9 +25,6 @@ import { Response } from 'express';
 export class TiktokController {
     constructor(private readonly service: TreeServie) {}
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Post()
     async create(@Res() res: Response, @Body() dto: AddTreeDto) {
         try {
@@ -38,9 +35,6 @@ export class TiktokController {
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Put('/update/:id')
     async update(
         @Res() res: Response,
@@ -55,9 +49,6 @@ export class TiktokController {
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Get('/detail/:id')
     async detail(@Res() res: Response, @Param('id') id: number) {
         try {
@@ -89,9 +80,6 @@ export class TiktokController {
         description: '10',
         required: false,
     })
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Get()
     async list(@Res() res: Response, @Req() req: RequestWithUserOption) {
         try {
@@ -174,9 +162,6 @@ export class TiktokController {
         }
     }
 
-    @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
-    @Roles([Role.ADMIN])
     @Delete('/delete/:id')
     async delete(@Res() res: Response, @Param('id') id: number) {
         try {

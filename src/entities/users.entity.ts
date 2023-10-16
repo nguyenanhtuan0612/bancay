@@ -39,6 +39,12 @@ export class User extends Model {
     active: boolean;
 
     @Column
+    fullName: string;
+
+    @Column
+    phoneNumber: string;
+
+    @Column
     @CreatedAt
     createdAt: Date;
 

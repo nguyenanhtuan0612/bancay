@@ -1,6 +1,5 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { genSalt, hash } from 'bcrypt';
-import { CountUserRegister } from './entities/countUserRegister.entity';
 import { User } from './entities/users.entity';
 import { Role } from './utils/constants';
 
