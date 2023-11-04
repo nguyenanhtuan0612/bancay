@@ -12,7 +12,7 @@ import { compare, genSalt, hash } from 'bcrypt';
 import { ExceptionWithMessage } from '@/exceptions/HttpException';
 import { authConfigs } from '@/config';
 import { JwtService } from '@nestjs/jwt';
-import { CountUserRegister } from '@/entities/countUserRegister.entity';
+// import { CountUserRegister } from '@/entities/countUserRegister.entity';
 
 @Injectable()
 export class AuthService {
@@ -38,20 +38,20 @@ export class AuthService {
 
         const month = new Date().getMonth();
         const year = new Date().getFullYear();
-        const count = await CountUserRegister.findOne({
-            where: { month, year },
-        });
+        // const count = await CountUserRegister.findOne({
+        //     where: { month, year },
+        // });
 
-        if (count) {
-            count.count += 1;
-            await count.save();
-        } else {
-            const data = new CountUserRegister();
-            data.month = month;
-            data.year = year;
-            data.count = 1;
-            await data.save();
-        }
+        // if (count) {
+        //     count.count += 1;
+        //     await count.save();
+        // } else {
+        //     const data = new CountUserRegister();
+        //     data.month = month;
+        //     data.year = year;
+        //     data.count = 1;
+        //     await data.save();
+        // }
 
         return new UserResponse(userData);
     }
