@@ -27,7 +27,7 @@ export class AuthMiddleware implements NestMiddleware {
                         new ExceptionWithMessage(
                             errors.LOGIN_ERROR_UNAUTHORIZE,
                             401,
-                            'Wrong authentication token',
+                            'Wrong authentication token312',
                         ),
                     );
                 }
@@ -36,11 +36,12 @@ export class AuthMiddleware implements NestMiddleware {
                 next();
             }
         } catch (error) {
+            console.log(error);
             next(
                 new ExceptionWithMessage(
                     errors.LOGIN_ERROR_UNAUTHORIZE,
                     401,
-                    'Wrong authentication token',
+                    'Wrong authentication token123',
                 ),
             );
         }

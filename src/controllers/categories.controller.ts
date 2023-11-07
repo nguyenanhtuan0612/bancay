@@ -87,7 +87,6 @@ export class CategoriesController {
             const data = await this.service.list(options);
             return res.status(200).json(data);
         } catch (error) {
-            console.log('cate', error);
             throw error;
         }
     }

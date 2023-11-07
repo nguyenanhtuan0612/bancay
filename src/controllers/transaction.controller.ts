@@ -18,7 +18,7 @@ import {
     UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 @ApiTags('Transaction')
 @Controller('transactions')
@@ -26,7 +26,7 @@ export class TransactionController {
     constructor(private readonly service: TransactionService) {}
 
     @ApiBearerAuth('authorization')
-    @UseGuards(JwtAuthGuard, RolesGuard)
+    @UseGuards(RolesGuard)
     @Roles([Role.CUSTOMER, Role.ADMIN])
     @Post('addToCard')
     async create(
@@ -148,6 +148,35 @@ export class TransactionController {
     async comfirmDdetailone(@Res() res: Response, @Param('id') id: number) {
         try {
             const data = await this.service.detail(id);
+            return res.status(200).json(data);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @Post('/createTransaction')
+    async createTransaction(
+        @Res() res: Response,
+        @Req() req: RequestWithUser,
+        @Body() body: any,
+    ) {
+        try {
+            const { auth } = req;
+            const data = await this.service.createTransaction(auth, body);
+            return res.status(200).json(data);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @Get('/list')
+    async listAllTransaction(
+        @Res() res: Response,
+        @Req() req: RequestWithOptions,
+    ) {
+        try {
+            const { options } = req;
+            const data = await this.service.listAllTransactions(options);
             return res.status(200).json(data);
         } catch (error) {
             throw error;

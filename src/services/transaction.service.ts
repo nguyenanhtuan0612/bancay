@@ -226,4 +226,57 @@ export class TransactionService {
 
         return detail;
     }
+
+    async createTransaction(user: IUser, body: bodyTransaction) {
+        const newTransaction = await Transaction.create({
+            userId: user.id,
+            price: body.price,
+            address: body.address,
+        });
+
+        for (const tree of body.listItem) {
+            const existTree = await Item.findOne({
+                where: {
+                    transactionId: newTransaction.id,
+                    treeId: tree.id,
+                },
+            });
+
+            if (existTree) {
+                await Item.update(
+                    {
+                        quantity: existTree.quantity + 1,
+                    },
+                    {
+                        where: {
+                            treeId: existTree.treeId,
+                        },
+                    },
+                );
+            } else {
+                const item = new Item();
+                item.transactionId = newTransaction.id;
+                item.quantity = 1;
+                item.treeId = tree.id;
+                await item.save();
+            }
+        }
+        newTransaction.save();
+        return newTransaction;
+    }
+
+    async listAllTransactions(options: Options): Promise<any> {
+        const data = await Transaction.findAndCountAll({
+            ...options,
+            include: [{ model: Tree }, { model: User }],
+        });
+
+        return data;
+    }
+}
+
+interface bodyTransaction {
+    address: string;
+    price: number | string;
+    listItem: any[];
 }

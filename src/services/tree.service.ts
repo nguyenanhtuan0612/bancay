@@ -18,6 +18,7 @@ export class TreeServie {
         data.active = true;
         data.price = dto.price;
         data.image = dto.image;
+        data.inStock = dto.inStock;
         const res = await data.save();
         for (const iterator of dto.categories) {
             const cate = await Category.findByPk(iterator);
