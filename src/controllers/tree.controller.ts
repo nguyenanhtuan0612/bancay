@@ -148,20 +148,20 @@ export class TiktokController {
         description: '10',
         required: false,
     })
-    @Get('listTreeCoin')
-    async listTreeCoin(
-        @Res() res: Response,
-        @Req() req: RequestWithUserOption,
-    ) {
-        try {
-            const { options } = req;
-            const data = await this.service.listTree(options);
-            return res.status(200).json(data);
-        } catch (error) {
-            throw error;
-        }
-    }
 
+    // @Get('listTreeCoin')
+    // async listTreeCoin(
+    //     @Res() res: Response,
+    //     @Req() req: RequestWithUserOption,
+    // ) {
+    //     try {
+    //         const { options } = req;
+    //         const data = await this.service.listTree(options);
+    //         return res.status(200).json(data);
+    //     } catch (error) {
+    //         throw error;
+    //     }
+    // }
     @Delete('/delete/:id')
     async delete(@Res() res: Response, @Param('id') id: number) {
         try {

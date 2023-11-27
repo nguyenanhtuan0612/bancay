@@ -33,6 +33,12 @@ export class CreateUserDto {
     @ApiProperty()
     @IsString()
     phoneNumber: string;
+
+    @IsString()
+    address: string;
+
+    @IsString()
+    hsl: string;
 }
 
 export class UpdateUserDto {
@@ -60,6 +66,12 @@ export class UpdateUserDto {
     @IsOptional()
     @IsString()
     phoneNumber: string;
+
+    @IsString()
+    address: string;
+
+    @IsString()
+    hsl: string;
 }
 
 export class LoginDto {
@@ -95,6 +107,8 @@ export class UserResponse {
     active: boolean;
     fullName: string;
     phoneNumber: string;
+    address: string;
+    hsl: string;
 
     constructor(iUser: User) {
         this.id = iUser.id;
@@ -103,6 +117,8 @@ export class UserResponse {
         this.active = iUser.active;
         this.fullName = iUser.fullName;
         this.phoneNumber = iUser.phoneNumber;
+        this.address = iUser.address;
+        this.hsl = iUser.hsl;
     }
 }
 

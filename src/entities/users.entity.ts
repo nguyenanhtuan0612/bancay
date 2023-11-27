@@ -45,6 +45,12 @@ export class User extends Model {
     phoneNumber: string;
 
     @Column
+    address: string;
+
+    @Column
+    hsl: string;
+
+    @Column
     @CreatedAt
     createdAt: Date;
 

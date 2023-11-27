@@ -19,6 +19,8 @@ export class UsersService {
         user.role = createUserDto.role;
         user.fullName = createUserDto.fullName;
         user.phoneNumber = createUserDto.phoneNumber;
+        user.address = createUserDto.address;
+        user.hsl = createUserDto.hsl;
         const userData: IUser = await user.save();
 
         // const month = new Date().getMonth();
@@ -100,5 +102,14 @@ export class UsersService {
         userData.role = dto.role;
         await userData.save();
         return new UserResponse(userData);
+    }
+
+    async delete(id: string) {
+        const exitsData = await User.findByPk(id);
+        if (!exitsData) {
+            throw new ExceptionWithMessage(errors.ACCOUNT_NOT_FOUND, 404);
+        }
+        await exitsData.destroy();
+        return exitsData;
     }
 }

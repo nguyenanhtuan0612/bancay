@@ -4,6 +4,7 @@ import { ChangeRoleDto, CreateUserDto } from '@dtos/users.dto';
 import {
     Body,
     Controller,
+    Delete,
     Get,
     Param,
     Post,
@@ -106,6 +107,16 @@ class UsersController {
             // }
             const rs = await this.usersService.detail(id);
             return res.status(200).json(rs);
+        } catch (error) {
+            throw error;
+        }
+    }
+
+    @Delete('/:id')
+    async delete(@Param('id') id: string, @Res() res: Response) {
+        try {
+            const result = this.usersService.delete(id);
+            return res.status(200).json(result);
         } catch (error) {
             throw error;
         }
