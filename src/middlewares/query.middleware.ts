@@ -37,8 +37,10 @@ const generateWhere = (filter: Filter) => {
             return { [prop]: { [Op.iLike]: `%${value}%` } };
         }
         case 'between': {
-            const strVal: string = value as string;
-            return { [prop]: { [Op.between]: JSON.parse(strVal) } };
+            if (!Array.isArray(value)) {
+                return { [prop]: value };
+            }
+            return { [prop]: { [Op.between]: value } };
         }
         case 'in': {
             if (!Array.isArray(value)) {
@@ -117,6 +119,8 @@ export class QueryMiddleware implements NestMiddleware {
                     options.order.push(generateOrder(iterator));
                 }
             }
+            console.log(options);
+
             req.options = options;
             next();
         } catch (error) {
